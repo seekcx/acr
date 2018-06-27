@@ -15,14 +15,12 @@
 
 目前只完成了核心功能，规则将逐步添加。
 
-
 ## 特性
 
-* 全异步验证支持（并且没有 [yup](https://github.com/jquense/yup) 的执行顺序错乱问题）
-* 高度可扩展 
-* 链式操作（定义和使用）
-* 国际化支持
-
+-   全异步验证支持（并且没有 [yup](https://github.com/jquense/yup) 的执行顺序错乱问题）
+-   高度可扩展 
+-   链式操作（定义和使用）
+-   国际化支持
 
 ## 安装
 
@@ -37,7 +35,6 @@ yarn
 ```sh
 yarn add acr
 ```
-
 
 ## 配置
 
@@ -55,7 +52,6 @@ const acr = new Acr({
     }
 });
 ```
-
 
 ## 使用
 
@@ -93,11 +89,9 @@ try {
 }
 ```
 
-
 ## 文档
 
 敬请期待
-
 
 ## 成员
 
@@ -105,11 +99,9 @@ try {
 | -------- | ---------------------- |
 | **abel** | <https://abel.seek.cx> |
 
-
 ## License
 
 [MIT](LICENSE) © [seekcx](https://abel.seek.cx)
-
 
 ## Contributors
 
