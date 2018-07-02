@@ -8,8 +8,10 @@ class Type {
         this.rules = [];
         this.options = Object.assign({}, options);
 
-        this.define('required', (_, { data, field }) => {
-            return data[field] !== undefined;
+        this.define('required', (_, { data, path, params }) => {
+            if (data[path] === undefined) {
+                return params[0] ? params[0] : false;
+            }
         });
     }
 

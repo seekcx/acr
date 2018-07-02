@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const { get } = require('lodash');
+const { get, merge, lowerCase } = require('lodash');
 const Type = require('./type');
 const Chain = require('./chain');
 const ValidationError = require('./validation-error');
@@ -17,14 +17,18 @@ const loadLocale = locale => {
 
 const loadRule = acr => {
     require('./rules/string')(acr);
+    require('./rules/number')(acr);
 };
 
 class Acr {
     constructor(config) {
-        this.config = Object.assign(
+        this.config = merge(
             {
                 locale: 'en',
-                chains: {}
+                chains: {},
+                context: {},
+                translate: (string, locale) =>
+                    get(loadLocale(locale), string, string)
             },
             config
         );
@@ -34,19 +38,18 @@ class Acr {
     }
 
     get locale() {
-        return this.config.locale;
+        return lowerCase(this.config.locale);
     }
 
     translate(string, locale) {
-        const locales = loadLocale(locale || this.locale);
-        return get(locales, string, string);
+        return this.config.translate(string, locale || this.locale);
     }
 
     type(name, options) {
         const { types } = this;
 
         if (types[name] === undefined) {
-            types[name] = new Type(name, Object.assign({ acr: this }, options));
+            types[name] = new Type(name, merge({ acr: this }, options));
 
             Object.defineProperty(this, name, {
                 value: params => {
@@ -55,7 +58,7 @@ class Acr {
 
                     return new Chain(
                         types[name],
-                        Object.assign({}, this.config.chains[name], params)
+                        merge({}, this.config.chains[name], params)
                     );
                 }
             });
@@ -67,7 +70,7 @@ class Acr {
     async validate(data, rules) {
         assert.notEqual(rules, undefined, 'validate rules cannot be empty.');
 
-        const chains = Object.keys(Object.assign({}, rules)).map(path =>
+        const chains = Object.keys(merge({}, rules)).map(path =>
             rules[path].mount(data, path)
         );
 

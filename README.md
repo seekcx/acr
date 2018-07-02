@@ -9,11 +9,7 @@
 
 优雅、易扩展的异步验证组件。
 
-在实现上借鉴了 [joi](https://github.com/hapijs/joi) 和 [yup](https://github.com/jquense/yup) 的 api 风格，但是并没有在代码逻辑上有太多的参考。
-
-尽管 [joi](https://github.com/hapijs/joi) 和 [yup](https://github.com/jquense/yup) 已经十分强大，但是他们都有两个比较致命的问题在影响正常使用，所以才写了此项目。
-
-目前只完成了核心功能，规则将逐步添加。
+在实现上借鉴了 [joi](https://github.com/hapijs/joi) 和 [yup](https://github.com/jquense/yup) 的 api 风格，重新设计底层实现，因此在有非常强的扩展性。
 
 ## 特性
 
@@ -21,6 +17,7 @@
 -   高度可扩展 
 -   链式操作（定义和使用）
 -   国际化支持
+-   Typescript 支持
 
 ## 安装
 
@@ -38,13 +35,17 @@ yarn add acr
 
 ## 配置
 
-传入配置并创建一个 `acr` 实例，配置说明：**待完善**
+传入配置并创建一个 `acr` 实例，接下来的一切都在这个实例上完成。
 
 ```js
 const Acr = require('acr');
 
 const acr = new Acr({
     locale: 'zh-cn',
+    context: { app },
+    translate: (string, locale) => {
+        return 'hello';
+    },
     chains: {
         string: {
             transform: String
@@ -52,6 +53,8 @@ const acr = new Acr({
     }
 });
 ```
+
+[配置说明](https://seek.gitbook.io/acr/config)
 
 ## 使用
 
@@ -91,7 +94,11 @@ try {
 
 ## 文档
 
-敬请期待
+[快速开始](https://seek.gitbook.io/acr/quick-start)
+
+[配置说明](https://seek.gitbook.io/acr/config)
+
+[详细文档](https://seek.gitbook.io/acr)
 
 ## 成员
 

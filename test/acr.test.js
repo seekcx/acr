@@ -87,3 +87,35 @@ test('should be failed when return a string', async t => {
     const error = await t.throws(promise);
     t.is(error.errors.message, 'foobar');
 });
+
+test('required', async t => {
+    const { foo } = await acr.validate(
+        {
+            foo: 'bar'
+        },
+        {
+            foo: acr.string().required()
+        }
+    );
+
+    t.is(foo, 'bar');
+
+    let promise = acr.validate(
+        {},
+        {
+            foo: acr.string().required()
+        }
+    );
+
+    let error = await t.throws(promise);
+    t.is(error.errors[0].message, 'foo is a required field');
+
+    promise = acr.validate(
+        {},
+        {
+            foo: acr.string().required('foo is required')
+        }
+    );
+    error = await t.throws(promise);
+    t.is(error.errors[0].message, 'foo is required');
+});

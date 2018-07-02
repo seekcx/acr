@@ -44,6 +44,7 @@ class Validator {
         this.context = {
             data,
             path,
+            context: this.acr.config.context,
             identity: this.identity,
             params: options.params
         };
