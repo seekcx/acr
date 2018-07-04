@@ -109,9 +109,3 @@ try {
 ## License
 
 [MIT](LICENSE) © [seekcx](https://abel.seek.cx)
-
-## Contributors
-
-| Name       | Website                |
-| ---------- | ---------------------- |
-| **seekcx** | <https://abel.seek.cx> |
