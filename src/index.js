@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const { get, merge, lowerCase } = require('lodash');
+const { get, merge } = require('lodash');
 const Type = require('./type');
 const Chain = require('./chain');
 const ValidationError = require('./validation-error');
@@ -38,7 +38,7 @@ class Acr {
     }
 
     get locale() {
-        return lowerCase(this.config.locale);
+        return this.config.locale;
     }
 
     translate(string, locale) {

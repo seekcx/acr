@@ -38,7 +38,7 @@ yarn add acr
 传入配置并创建一个 `acr` 实例，接下来的一切都在这个实例上完成。
 
 ```js
-const Acr = require('acr');
+const { Acr } = require('acr');
 
 const acr = new Acr({
     locale: 'zh-cn',
