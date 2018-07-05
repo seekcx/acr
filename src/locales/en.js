@@ -19,6 +19,9 @@ module.exports = {
         required: '{name || path} is a required field',
         equal: '{name || path} must be equal to {params[0]}',
         max: '{name || path} must be greater than or equal to {params[0]}',
-        min: '{name || path} must be less than or equal to {params[0]}'
+        min: '{name || path} must be less than or equal to {params[0]}',
+        positive: '{name || path} must be a positive number',
+        negative: '{name || path} must be a negative number',
+        integer: '{name || path} must be an integer'
     }
 };

@@ -1,19 +1,10 @@
 'use strict';
 
 const assert = require('assert');
-const { get, merge } = require('lodash');
+const { get, merge, indexOf, has } = require('lodash');
 const Type = require('./type');
 const Chain = require('./chain');
 const ValidationError = require('./validation-error');
-
-const locales = Object.create(null);
-const loadLocale = locale => {
-    if (!locales[locale]) {
-        locales[locale] = require(`./locales/${locale}`);
-    }
-
-    return locales[locale];
-};
 
 const loadRule = acr => {
     require('./rules/string')(acr);
@@ -24,25 +15,50 @@ class Acr {
     constructor(config) {
         this.config = merge(
             {
-                locale: 'en',
+                lang: 'en',
+                locales: {},
                 chains: {},
                 context: {},
-                translate: (string, locale) =>
-                    get(loadLocale(locale), string, string)
+                translate: (string, lang) => {
+                    return get(this.loadLocale(lang), string, string);
+                }
             },
             config
         );
         this.types = Object.create(null);
+        this.locales = {};
 
         loadRule(this);
     }
 
-    get locale() {
-        return this.config.locale;
+    isSupportLanguage(lang) {
+        return indexOf(['en', 'zh-cn'], lang) > -1;
     }
 
-    translate(string, locale) {
-        return this.config.translate(string, locale || this.locale);
+    loadLocale(lang) {
+        if (!this.locales[lang]) {
+            if (this.isSupportLanguage(lang)) {
+                this.locales[lang] = require(`./locales/${lang}`);
+            }
+
+            if (has(this, `config.locales.${lang}`)) {
+                this.locales[lang] = merge(
+                    {},
+                    this.locales[lang],
+                    get(this, `config.locales.${lang}`)
+                );
+            }
+        }
+
+        return this.locales[lang];
+    }
+
+    get lang() {
+        return this.config.lang;
+    }
+
+    translate(string, lang) {
+        return this.config.translate(string, lang || this.lang);
     }
 
     type(name, options) {

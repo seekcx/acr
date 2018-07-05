@@ -1,11 +1,10 @@
 # Acr
 
-[![build status](https://img.shields.io/travis/seekcx/acr.svg)](https://travis-ci.org/seekcx/acr)
-[![code coverage](https://img.shields.io/codecov/c/github/seekcx/acr.svg)](https://codecov.io/gh/seekcx/acr)
-[![code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![made with lass](https://img.shields.io/badge/made_with-lass-95CC28.svg)](https://lass.js.org)
-[![license](https://img.shields.io/github/license/seekcx/acr.svg)](LICENSE)
+[![GitHub package version](https://img.shields.io/npm/v/acr.svg?style=flat-square)](https://npmjs.org/package/acr)
+[![build status](https://img.shields.io/travis/seekcx/acr.svg?style=flat-square)](https://travis-ci.org/seekcx/acr)
+[![code coverage](https://img.shields.io/codecov/c/github/seekcx/acr.svg?style=flat-square)](https://codecov.io/gh/seekcx/acr)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![license](https://img.shields.io/github/license/seekcx/acr.svg?style=flat-square)](LICENSE)
 
 优雅、易扩展的异步验证组件。
 
@@ -14,10 +13,11 @@
 ## 特性
 
 -   全异步验证支持（并且没有 [yup](https://github.com/jquense/yup) 的执行顺序错乱问题）
--   高度可扩展 
+-   高度可扩展
 -   链式操作（定义和使用）
 -   国际化支持
 -   Typescript 支持
+-   参数命名
 
 ## 安装
 
@@ -42,10 +42,6 @@ const { Acr } = require('acr');
 
 const acr = new Acr({
     locale: 'zh-cn',
-    context: { app },
-    translate: (string, locale) => {
-        return 'hello';
-    },
     chains: {
         string: {
             transform: String
@@ -54,7 +50,7 @@ const acr = new Acr({
 });
 ```
 
-[配置说明](https://seek.gitbook.io/acr/config)
+[详细配置](https://seek.gitbook.io/acr/config)
 
 ## 使用
 

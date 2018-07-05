@@ -78,3 +78,75 @@ test('min', async t => {
     error = await t.throws(promise);
     t.is(error.errors.message, 'foobar');
 });
+
+test('positive', async t => {
+    const chain = await acr
+        .number()
+        .positive()
+        .validate(8);
+    t.true(chain instanceof Chain);
+
+    let promise = acr
+        .number('test')
+        .positive()
+        .validate(-2);
+
+    let error = await t.throws(promise);
+    t.is(error.errors.message, 'test must be a positive number');
+
+    promise = acr
+        .number()
+        .positive('foobar')
+        .validate(-2);
+
+    error = await t.throws(promise);
+    t.is(error.errors.message, 'foobar');
+});
+
+test('negative', async t => {
+    const chain = await acr
+        .number()
+        .negative()
+        .validate(-2);
+    t.true(chain instanceof Chain);
+
+    let promise = acr
+        .number('test')
+        .negative()
+        .validate(8);
+
+    let error = await t.throws(promise);
+    t.is(error.errors.message, 'test must be a negative number');
+
+    promise = acr
+        .number()
+        .negative('foobar')
+        .validate(8);
+
+    error = await t.throws(promise);
+    t.is(error.errors.message, 'foobar');
+});
+
+test('integer', async t => {
+    const chain = await acr
+        .number()
+        .integer()
+        .validate(8);
+    t.true(chain instanceof Chain);
+
+    let promise = acr
+        .number('test')
+        .integer()
+        .validate(2.1);
+
+    let error = await t.throws(promise);
+    t.is(error.errors.message, 'test must be an integer');
+
+    promise = acr
+        .number()
+        .integer('foobar')
+        .validate('1.2');
+
+    error = await t.throws(promise);
+    t.is(error.errors.message, 'foobar');
+});

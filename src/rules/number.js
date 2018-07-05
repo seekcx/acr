@@ -1,6 +1,7 @@
 'use strict';
 
 const assert = require('assert');
+const { isInteger } = require('lodash');
 
 module.exports = acr => {
     const number = acr.type('number');
@@ -33,5 +34,17 @@ module.exports = acr => {
         );
 
         return Number(value) < params[0] ? params[1] || false : true;
+    });
+
+    number.define('positive', (value, { params }) => {
+        return Number(value) > 0 ? true : params[0] || false;
+    });
+
+    number.define('negative', (value, { params }) => {
+        return Number(value) < 0 ? true : params[0] || false;
+    });
+
+    number.define('integer', (value, { params }) => {
+        return isInteger(Number(value)) ? true : params[0] || false;
     });
 };

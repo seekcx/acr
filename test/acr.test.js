@@ -17,6 +17,19 @@ test('translate message', t => {
     t.is(message, '{name || path}应该是一个有效的邮箱');
 });
 
+test('custom locales', t => {
+    const acr = new Acr({
+        locales: {
+            mars: {
+                hi: '伱好'
+            }
+        }
+    });
+
+    const message = acr.translate('hi', 'mars');
+    t.is(message, '伱好');
+});
+
 test('create a type', t => {
     const type = acr.type('test');
 
