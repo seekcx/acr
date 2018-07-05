@@ -41,7 +41,7 @@ yarn add acr
 const { Acr } = require('acr');
 
 const acr = new Acr({
-    locale: 'zh-cn',
+    lang: 'zh-cn',
     chains: {
         string: {
             transform: String
