@@ -1,7 +1,7 @@
 'use strict';
 
 /* eslint-disable no-await-in-loop */
-const { isNil, get } = require('lodash');
+const { isNil, get, set } = require('lodash');
 const Result = require('./result');
 const ValidationError = require('./validation-error');
 
@@ -78,9 +78,15 @@ class Chain {
         return this;
     }
 
-    async transform() {
+    async trans() {
         const fn = get(this.params, 'transform');
         return isNil(fn) ? this.value : fn(this.value);
+    }
+
+    transform(fn) {
+        set(this.params, 'transform', fn);
+
+        return this;
     }
 }
 

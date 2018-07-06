@@ -86,9 +86,9 @@ class Acr {
     async validate(data, rules) {
         assert.notEqual(rules, undefined, 'validate rules cannot be empty.');
 
-        const chains = Object.keys(merge({}, rules)).map(path =>
-            rules[path].mount(data, path)
-        );
+        const chains = Object.keys(merge({}, rules)).map(path => {
+            return rules[path].mount(data, path);
+        });
 
         const results = await Promise.all(chains.map(chain => chain.valid()));
         const errors = results
@@ -99,7 +99,7 @@ class Acr {
             throw new ValidationError(errors);
         }
 
-        const pures = await Promise.all(chains.map(chain => chain.transform()));
+        const pures = await Promise.all(chains.map(chain => chain.trans()));
         pures.forEach((pure, key) => {
             data[chains[key].path] = pure;
         });

@@ -132,3 +132,16 @@ test('required', async t => {
     error = await t.throws(promise);
     t.is(error.errors[0].message, 'foo is required');
 });
+
+test('transform', async t => {
+    const { foo } = await acr.validate(
+        {
+            foo: 'bar'
+        },
+        {
+            foo: acr.string().transform(() => 'bax')
+        }
+    );
+
+    t.is(foo, 'bax');
+});

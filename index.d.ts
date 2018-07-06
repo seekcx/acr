@@ -7,12 +7,16 @@ declare namespace Acr {
     }
 
     declare interface Config {
-        locale?: string;
+        lang?: string;
+        locales?: {
+            [string]: any;
+        };
         context?: any;
         translate?(string: string, locale?: string): string
         chains?: {
             [string]: {
-                transform(value: any): any;
+                name?: string;
+                transform?(value: any): any;
             }
         },
     }
@@ -66,7 +70,7 @@ declare namespace Acr {
 
     declare class Chain {
         validate(value: any): Promise<this>;
-        transform(): Promise<any>;
+        transform(fn: (value: any) => Promise<any>): Promise<any>;
         required(message?: string): this;
     }
 
@@ -88,6 +92,9 @@ declare namespace Acr {
         equal(value: number, message?: string): this;
         max(value: number, message?: string): this;
         min(value: number, message?: string): this;
+        positive(message?: string): this;
+        negative(message?: string): this;
+        integer(message?: string): this;
     }
 }
 
