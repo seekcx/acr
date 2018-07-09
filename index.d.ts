@@ -1,27 +1,27 @@
 declare namespace Acr {
-    declare interface Context {
+    interface Context {
         data: any;
         path: string;
         identity: string;
         params: any[];
     }
 
-    declare interface Config {
+    interface Config {
         lang?: string;
         locales?: {
-            [string]: any;
+            [x: string]: any;
         };
         context?: any;
         translate?(string: string, locale?: string): string
         chains?: {
-            [string]: {
+            [x: string]: {
                 name?: string;
                 transform?(value: any): any;
             }
         },
     }
 
-    declare interface Detail {
+    interface Detail {
         path: string;
         identity: string;
         message: string;
@@ -32,10 +32,9 @@ declare namespace Acr {
         errors: Detail | Detail[];
     }
 
-    type RuleResult = ?(boolean | string);
-    declare function Rule(value: any, context: Context): RuleResult;
+    type Rule = (value: any, context: Context) => boolean | string | undefined | null;
 
-    declare class Validator {
+    class Validator {
         constructor(name: string, rule: Rule, options?: any);
         acr: Acr;
         identity: string;
@@ -48,19 +47,19 @@ declare namespace Acr {
         validate(value: any, data: any, path: string): Promise<boolean>;
     }
 
-    declare class Type {
+    class Type {
         constructor(name: string, options?: any);
         acr: Acr;
-        define(name: string, rule: Rule, options?: any);
+        define(name: string, rule: Rule, options?: any): this;
         required(message?: string): Validator;
     }
 
-    declare interface ChainOptions {
+    interface ChainOptions {
         name?: string;
         transform?: (value: any) => string;
     }
 
-    declare class Result {
+    class Result {
         constructor(result: boolean, context: any);
         detail: Detail;
         path: string;
@@ -68,7 +67,7 @@ declare namespace Acr {
         message: string;
     }
 
-    declare class Chain {
+    class Chain {
         validate(value: any): Promise<this>;
         transform(fn: (value: any) => Promise<any>): Promise<any>;
         required(message?: string): this;
@@ -81,7 +80,7 @@ declare namespace Acr {
         length(value: number, message?: string): this;
         email(message?: string): this;
         regex(regex: RegExp, message?: string): this;
-        in(array: any[], message?: stirng): this;
+        in(array: any[], message?: string): this;
         objectId(message?: string): this;
         base64(message?: string): this;
         url(message?: string): this;
@@ -99,15 +98,15 @@ declare namespace Acr {
 }
 
 declare class Acr {
-    constructor(config?: Config);
+    constructor(config?: Acr.Config);
     locale: string;
     translate(string: string, locale?: string): string;
     type(name: string, options?: any): Acr.Type;
     validate(data: any, rules: any);
     string(name: string): Acr.StringType;
-    string(options?: ChainOptions): Acr.StringType;
+    string(options?: Acr.ChainOptions): Acr.StringType;
     number(name: string): Acr.NumberType;
-    number(options?: ChainOptions): Acr.NumberType;
+    number(options?: Acr.ChainOptions): Acr.NumberType;
 }
 
 export = Acr;
