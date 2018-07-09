@@ -95,18 +95,20 @@ declare namespace Acr {
         negative(message?: string): this;
         integer(message?: string): this;
     }
+
+    class Acr {
+        constructor(config?: Acr.Config);
+        locale: string;
+        translate(string: string, locale?: string): string;
+        type(name: string, options?: any): Acr.Type;
+        validate(data: any, rules: any);
+        string(name: string): Acr.StringType;
+        string(options?: Acr.ChainOptions): Acr.StringType;
+        number(name: string): Acr.NumberType;
+        number(options?: Acr.ChainOptions): Acr.NumberType;
+    }
 }
 
-declare class Acr {
-    constructor(config?: Acr.Config);
-    locale: string;
-    translate(string: string, locale?: string): string;
-    type(name: string, options?: any): Acr.Type;
-    validate(data: any, rules: any);
-    string(name: string): Acr.StringType;
-    string(options?: Acr.ChainOptions): Acr.StringType;
-    number(name: string): Acr.NumberType;
-    number(options?: Acr.ChainOptions): Acr.NumberType;
-}
+declare interface Acr extends Acr.Acr {}
 
 export = Acr;
