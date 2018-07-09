@@ -97,6 +97,10 @@ try {
 
 [详细文档](https://seek.gitbook.io/acr)
 
+## 相关
+
+[egg-acr](https://github.com/seekcx/egg-acr)：基于 acr 实现的 eggjs 版本的异步验证插件。
+
 ## 成员
 
 | Name     | Website                |
