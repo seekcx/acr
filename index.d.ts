@@ -2,6 +2,7 @@ declare namespace Acr {
     interface Context {
         data: any;
         path: string;
+        context: any;
         identity: string;
         params: any[];
     }
@@ -32,7 +33,7 @@ declare namespace Acr {
         errors: Detail | Detail[];
     }
 
-    type Rule = (value: any, context: Context) => boolean | string | undefined | null;
+    type Rule = (value: any, context: Context) => Promise<any> | any;
 
     class Validator {
         constructor(name: string, rule: Rule, options?: any);
