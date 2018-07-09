@@ -8,7 +8,7 @@
 
 优雅、易扩展的异步验证组件。
 
-在实现上借鉴了 [joi](https://github.com/hapijs/joi) 和 [yup](https://github.com/jquense/yup) 的 api 风格，重新设计底层实现，因此在有非常强的扩展性。
+在实现上借鉴了 [joi](https://github.com/hapijs/joi) 和 [yup](https://github.com/jquense/yup) 的 api 风格，重新设计底层实现，具有非常强的扩展性。
 
 ## 特性
 
