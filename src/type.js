@@ -7,12 +7,6 @@ class Type {
         this.name = name;
         this.rules = [];
         this.options = Object.assign({}, options);
-
-        this.define('required', (_, { data, path, params }) => {
-            if (data[path] === undefined) {
-                return params[0] ? params[0] : false;
-            }
-        });
     }
 
     get acr() {
