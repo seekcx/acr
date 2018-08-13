@@ -5,7 +5,7 @@ const { template } = require('lodash');
 
 class Validator {
     constructor(name, rule, options) {
-        this.options = Object.assign({ name }, options, { rule });
+        this.options = { name, ...options, rule };
     }
 
     get acr() {
@@ -18,11 +18,11 @@ class Validator {
     }
 
     get data() {
-        return Object.assign({
+        return {
             name: this.options.chain.params.name,
             path: this.context.path,
             params: this.options.params
-        });
+        };
     }
 
     get message() {

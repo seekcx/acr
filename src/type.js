@@ -6,7 +6,7 @@ class Type {
     constructor(name, options) {
         this.name = name;
         this.rules = [];
-        this.options = Object.assign({}, options);
+        this.options = { ...options };
     }
 
     get acr() {
@@ -19,18 +19,12 @@ class Type {
         Object.defineProperty(this, name, {
             writable: true,
             value: (chain, ...args) => {
-                return new Validator(
-                    name,
-                    rule,
-                    Object.assign(
-                        {
-                            type: this,
-                            chain,
-                            params: args
-                        },
-                        options
-                    )
-                );
+                return new Validator(name, rule, {
+                    type: this,
+                    chain,
+                    params: args,
+                    ...options
+                });
             }
         });
 

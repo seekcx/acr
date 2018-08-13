@@ -25,7 +25,7 @@ class Acr {
             },
             config
         );
-        this.types = Object.create(null);
+        this.types = {};
         this.locales = {};
 
         loadRule(this);
@@ -84,7 +84,11 @@ class Acr {
     }
 
     async validate(data, rules) {
-        assert.notEqual(rules, undefined, 'validate rules cannot be empty.');
+        assert.notStrictEqual(
+            rules,
+            undefined,
+            'validate rules cannot be empty.'
+        );
 
         const chains = Object.keys(merge({}, rules)).map(path => {
             return rules[path].mount(data, path);

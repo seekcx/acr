@@ -7,7 +7,7 @@ module.exports = acr => {
     const string = acr.type('string');
 
     string.define('equal', (value, { params, identity }) => {
-        assert.notEqual(
+        assert.notStrictEqual(
             params[0],
             undefined,
             `'${identity}' first parameter must be provided.`
@@ -17,7 +17,7 @@ module.exports = acr => {
     });
 
     string.define('max', (value, { params, identity }) => {
-        assert.notEqual(
+        assert.notStrictEqual(
             params[0],
             undefined,
             `'${identity}' first parameter must be provided.`
@@ -27,7 +27,7 @@ module.exports = acr => {
     });
 
     string.define('min', (value, { params, identity }) => {
-        assert.notEqual(
+        assert.notStrictEqual(
             params[0],
             undefined,
             `'${identity}' first parameter must be provided.`
@@ -37,7 +37,7 @@ module.exports = acr => {
     });
 
     string.define('length', (value, { params, identity }) => {
-        assert.notEqual(
+        assert.notStrictEqual(
             params[0],
             undefined,
             `'${identity}' first parameter must be provided.`
@@ -55,7 +55,7 @@ module.exports = acr => {
     });
 
     string.define('regex', (value, { params, identity }) => {
-        assert.equal(
+        assert.strictEqual(
             params[0] instanceof RegExp,
             true,
             `'${identity}' first parameter must be a RegExp type.`
@@ -65,7 +65,7 @@ module.exports = acr => {
     });
 
     string.define('in', (value, { params, identity }) => {
-        assert.equal(
+        assert.strictEqual(
             isArray(params[0]),
             true,
             `'${identity}' first parameter must be an Array type.`
@@ -113,7 +113,7 @@ module.exports = acr => {
     string.define('uuid', (value, { params, identity }) => {
         const pattern = uuid[params[0] || 'all'];
 
-        assert.equal(
+        assert.strictEqual(
             pattern instanceof RegExp,
             true,
             `'${identity}' first parameter must be 3, 4, 5 or "all"`

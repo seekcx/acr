@@ -7,7 +7,7 @@ module.exports = acr => {
     const number = acr.type('number');
 
     number.define('equal', (value, { params, identity }) => {
-        assert.notEqual(
+        assert.notStrictEqual(
             params[0],
             undefined,
             `'${identity}' first parameter must be provided.`
@@ -17,7 +17,7 @@ module.exports = acr => {
     });
 
     number.define('max', (value, { params, identity }) => {
-        assert.notEqual(
+        assert.notStrictEqual(
             params[0],
             undefined,
             `'${identity}' first parameter must be provided.`
@@ -27,7 +27,7 @@ module.exports = acr => {
     });
 
     number.define('min', (value, { params, identity }) => {
-        assert.notEqual(
+        assert.notStrictEqual(
             params[0],
             undefined,
             `'${identity}' first parameter must be provided.`
