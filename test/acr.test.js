@@ -114,14 +114,19 @@ test('required', async t => {
     t.is(foo, 'bar');
 
     let promise = acr.validate(
-        {},
         {
-            foo: acr.string().required()
+            bar: ''
+        },
+        {
+            foo: acr.string().required(),
+            bar: acr.string().required()
         }
     );
 
     let error = await t.throws(promise);
+
     t.is(error.errors[0].message, 'foo is a required field');
+    t.is(error.errors[1].message, 'bar is a required field');
 
     promise = acr.validate(
         {},

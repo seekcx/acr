@@ -61,7 +61,7 @@ class Chain {
         const validator = new Validator(
             'required',
             (_, { data, path, params }) => {
-                if (data[path] === undefined) {
+                if (data[path] === undefined || data[path] === '') {
                     return params[0] ? params[0] : false;
                 }
             },
@@ -99,7 +99,10 @@ class Chain {
             return result;
         }
 
-        if (this.isRequired === false && data[path] === undefined) {
+        if (
+            this.isRequired === false &&
+            (data[path] === undefined || data[path] === '')
+        ) {
             return new Result(true, this.context);
         }
 
