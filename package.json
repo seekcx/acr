@@ -1,7 +1,7 @@
 {
     "name": "acr",
     "description": "An async, extensible, elegant validation.",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "author": "seekcx <abel@seek.cx> (https://abel.seek.cx)",
     "bugs": {
         "url": "https://github.com/seekcx/acr/issues",
