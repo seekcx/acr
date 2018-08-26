@@ -1,7 +1,7 @@
 'use strict';
 
 /* eslint-disable no-await-in-loop */
-const { isNil, get, set } = require('lodash');
+const { isNil, get, set, isFunction } = require('lodash');
 const Result = require('./result');
 const Validator = require('./validator');
 const ValidationError = require('./validation-error');
@@ -10,6 +10,8 @@ class Chain {
     constructor(type, params) {
         this.type = type;
         this.isRequired = false;
+        this.hasDefaultValue = false;
+        this.defaultValue = undefined;
         this.requiredMessage = null;
         this.validator = [];
 
@@ -42,8 +44,10 @@ class Chain {
         return this;
     }
 
-    get value() {
-        return this.data[this.path];
+    default(value) {
+        this.defaultValue = value;
+
+        return this;
     }
 
     mount(data, path) {
@@ -103,6 +107,7 @@ class Chain {
             this.isRequired === false &&
             (data[path] === undefined || data[path] === '')
         ) {
+            this.hasDefaultValue = this.defaultValue !== undefined;
             return new Result(true, this.context);
         }
 
@@ -133,9 +138,17 @@ class Chain {
         return this;
     }
 
-    async trans() {
+    async value() {
+        if (this.hasDefaultValue) {
+            return isFunction(this.defaultValue)
+                ? this.defaultValue(this.data, this.context)
+                : this.defaultValue;
+        }
+
         const fn = get(this.params, 'transform');
-        return isNil(fn) ? this.value : fn(this.value);
+        const value = get(this.data, this.path);
+
+        return isNil(fn) ? value : fn(value);
     }
 
     transform(fn) {

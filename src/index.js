@@ -103,7 +103,7 @@ class Acr {
             throw new ValidationError(errors);
         }
 
-        const pures = await Promise.all(chains.map(chain => chain.trans()));
+        const pures = await Promise.all(chains.map(chain => chain.value()));
         pures.forEach((pure, key) => {
             data[chains[key].path] = pure;
         });
