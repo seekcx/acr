@@ -72,6 +72,8 @@ declare namespace Acr {
         validate(value: any): Promise<this>;
         transform(fn: (value: any) => Promise<any> | any): Promise<any>;
         required(message?: string): this;
+        default(value: any): this;
+        default(value: (data: any, context: any) => any): this;
     }
 
     export class StringType extends Chain {
