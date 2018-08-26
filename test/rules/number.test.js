@@ -1,6 +1,5 @@
 const test = require('ava');
 const Acr = require('../../src');
-const Chain = require('../../src/chain');
 
 let acr;
 test.beforeEach(() => {
@@ -8,11 +7,11 @@ test.beforeEach(() => {
 });
 
 test('equal', async t => {
-    const chain = await acr
+    const value = await acr
         .number()
         .equal(12)
         .validate(12);
-    t.true(chain instanceof Chain);
+    t.is(value, 12);
 
     let promise = acr
         .number({ name: 'test' })
@@ -32,11 +31,11 @@ test('equal', async t => {
 });
 
 test('max', async t => {
-    const chain = await acr
+    const value = await acr
         .number()
         .max(5)
         .validate(2);
-    t.true(chain instanceof Chain);
+    t.is(value, 2);
 
     let promise = acr
         .number('test')
@@ -56,11 +55,11 @@ test('max', async t => {
 });
 
 test('min', async t => {
-    const chain = await acr
+    const value = await acr
         .number()
         .min(5)
         .validate(8);
-    t.true(chain instanceof Chain);
+    t.is(value, 8);
 
     let promise = acr
         .number('test')
@@ -80,11 +79,11 @@ test('min', async t => {
 });
 
 test('positive', async t => {
-    const chain = await acr
+    const value = await acr
         .number()
         .positive()
         .validate(8);
-    t.true(chain instanceof Chain);
+    t.is(value, 8);
 
     let promise = acr
         .number('test')
@@ -104,11 +103,11 @@ test('positive', async t => {
 });
 
 test('negative', async t => {
-    const chain = await acr
+    const value = await acr
         .number()
         .negative()
         .validate(-2);
-    t.true(chain instanceof Chain);
+    t.is(value, -2);
 
     let promise = acr
         .number('test')
@@ -128,11 +127,11 @@ test('negative', async t => {
 });
 
 test('integer', async t => {
-    const chain = await acr
+    const value = await acr
         .number()
         .integer()
         .validate(8);
-    t.true(chain instanceof Chain);
+    t.is(value, 8);
 
     let promise = acr
         .number('test')

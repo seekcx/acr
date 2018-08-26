@@ -75,16 +75,16 @@ test('async validate error', async t => {
 });
 
 test('customize rule', async t => {
-    acr.type('test').define('foo', (value, { params }) => {
+    acr.type('test').define('equal', (value, { params }) => {
         return Promise.resolve(value === params[0] ? null : false);
     });
 
-    const chain = await acr
+    const value = await acr
         .test()
-        .foo('abel')
+        .equal('abel')
         .validate('abel');
 
-    t.true(chain instanceof Chain);
+    t.is(value, 'abel');
 });
 
 test('should be failed when return a string', async t => {

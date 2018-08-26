@@ -1,6 +1,5 @@
 const test = require('ava');
 const Acr = require('../../src');
-const Chain = require('../../src/chain');
 
 let acr;
 test.beforeEach(() => {
@@ -8,11 +7,11 @@ test.beforeEach(() => {
 });
 
 test('equal', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .equal('foo')
         .validate('foo');
-    t.true(chain instanceof Chain);
+    t.is(value, 'foo');
 
     let promise = acr
         .string({ name: 'test' })
@@ -32,11 +31,11 @@ test('equal', async t => {
 });
 
 test('max', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .max(5)
         .validate('foo');
-    t.true(chain instanceof Chain);
+    t.is(value, 'foo');
 
     let promise = acr
         .string('test')
@@ -56,11 +55,11 @@ test('max', async t => {
 });
 
 test('min', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .min(5)
         .validate('foobar');
-    t.true(chain instanceof Chain);
+    t.is(value, 'foobar');
 
     let promise = acr
         .string('test')
@@ -80,11 +79,11 @@ test('min', async t => {
 });
 
 test('length', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .length(5)
         .validate('fooba');
-    t.true(chain instanceof Chain);
+    t.is(value, 'fooba');
 
     let promise = acr
         .string('test')
@@ -97,18 +96,18 @@ test('length', async t => {
     promise = acr
         .string()
         .length(5, 'foobar')
-        .validate('foo');
+        .validate('foobar');
 
     error = await t.throws(promise);
     t.is(error.errors.message, 'foobar');
 });
 
 test('email', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .email()
         .validate('abel@seek.cx');
-    t.true(chain instanceof Chain);
+    t.is(value, 'abel@seek.cx');
 
     let promise = acr
         .string('test')
@@ -128,11 +127,11 @@ test('email', async t => {
 });
 
 test('regex', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .regex(/abel/)
         .validate('abel');
-    t.true(chain instanceof Chain);
+    t.is(value, 'abel');
 
     let promise = acr
         .string('test')
@@ -152,11 +151,11 @@ test('regex', async t => {
 });
 
 test('in', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .in(['foo', 'bar'])
         .validate('foo');
-    t.true(chain instanceof Chain);
+    t.is(value, 'foo');
 
     let promise = acr
         .string('test')
@@ -176,11 +175,11 @@ test('in', async t => {
 });
 
 test('objectId', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .objectId()
         .validate('5b2b5a1bcc6f21584075edc9');
-    t.true(chain instanceof Chain);
+    t.is(value, '5b2b5a1bcc6f21584075edc9');
 
     let promise = acr
         .string('test')
@@ -200,11 +199,11 @@ test('objectId', async t => {
 });
 
 test('base64', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .base64()
         .validate('MTIzNA==');
-    t.true(chain instanceof Chain);
+    t.is(value, 'MTIzNA==');
 
     let promise = acr
         .string('test')
@@ -232,11 +231,11 @@ test('base64', async t => {
 });
 
 test('url', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .url()
         .validate('https://seek.cx');
-    t.true(chain instanceof Chain);
+    t.is(value, 'https://seek.cx');
 
     let promise = acr
         .string('test')
@@ -256,11 +255,11 @@ test('url', async t => {
 });
 
 test('uuid', async t => {
-    const chain = await acr
+    const value = await acr
         .string()
         .uuid(4)
         .validate('b9a98908-436b-4481-9814-a0dd03ff1698');
-    t.true(chain instanceof Chain);
+    t.is(value, 'b9a98908-436b-4481-9814-a0dd03ff1698');
 
     let promise = acr
         .string('test')
