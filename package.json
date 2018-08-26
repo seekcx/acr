@@ -98,6 +98,7 @@
                 "error",
                 4
             ],
+            "eqeqeq": "off",
             "max-len": [
                 "error",
                 {
@@ -105,6 +106,7 @@
                     "ignoreUrls": true
                 }
             ],
+            "no-await-in-loop": "off",
             "capitalized-comments": "off",
             "camelcase": "off",
             "no-warning-comments": "off"

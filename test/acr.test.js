@@ -180,3 +180,43 @@ test('default', async t => {
     t.is(foo, 'bar');
     t.is(bar, 'foo');
 });
+
+test('when', async t => {
+    const promise = acr.validate(
+        {
+            name: 'abel',
+            age: 18,
+            bio: 'abcdefg',
+            number: '18912345678'
+        },
+        {
+            age: acr
+                .when(
+                    data => {
+                        return data.name === 'tom';
+                    },
+                    () => {
+                        return acr.number().min(10);
+                    }
+                )
+                .when('name', 'abel', () => {
+                    return acr.number().min(20);
+                }),
+            bio: acr
+                .when('name', 'jack', () => {
+                    return acr.string().min(5);
+                })
+                .other(() => {
+                    return acr.string().min(10);
+                }),
+            number: acr.when('name', 'jack', () => {
+                return acr.string().equal('18912345678');
+            })
+        }
+    );
+
+    const error = await t.throws(promise);
+
+    t.is(error.errors[0].message, 'age must be less than or equal to 20');
+    t.is(error.errors[1].message, 'bio must be at least 10 characters');
+});
