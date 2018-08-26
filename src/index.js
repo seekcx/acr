@@ -91,7 +91,7 @@ class Acr {
             'validate rules cannot be empty.'
         );
 
-        const chains = await Promise.all(
+        let chains = await Promise.all(
             Object.keys(merge({}, rules)).map(path => {
                 if (rules[path] instanceof When) {
                     return Promise.resolve(
@@ -107,14 +107,14 @@ class Acr {
             })
         );
 
+        chains = chains.filter(chain => {
+            return chain instanceof Chain;
+        });
+
         const results = await Promise.all(
-            chains
-                .filter(chain => {
-                    return chain instanceof Chain;
-                })
-                .map(chain => {
-                    return chain.valid();
-                })
+            chains.map(chain => {
+                return chain.valid();
+            })
         );
         const errors = results
             .filter(result => result.result === false)
