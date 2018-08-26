@@ -99,9 +99,17 @@ declare namespace Acr {
         integer(message?: string): this;
     }
 
+    class When {
+        when(path: string, expect: any, rule: () => Chain): this;
+        when(expected: (data: any, context: any) => Promise<boolean> | boolean, rule: () => Chain): this;
+        other(chain: () => Chain): this;
+    }
+
     class Acr {
         constructor(config?: Acr.Config);
         locale: string;
+        when(path: string, expect: any, rule: () => Chain): When;
+        when(expected: (data: any, context: any) => Promise<boolean> | boolean, rule: () => Chain): When;
         translate(string: string, locale?: string): string;
         type(name: string, options?: any): Acr.Type;
         validate(data: any, rules: any);
