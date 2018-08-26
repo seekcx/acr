@@ -4,6 +4,7 @@ const assert = require('assert');
 const { get, merge, indexOf, has } = require('lodash');
 const Type = require('./type');
 const Chain = require('./chain');
+const When = require('./when');
 const ValidationError = require('./validation-error');
 
 const loadRule = acr => {
@@ -90,11 +91,31 @@ class Acr {
             'validate rules cannot be empty.'
         );
 
-        const chains = Object.keys(merge({}, rules)).map(path => {
-            return rules[path].mount(data, path);
-        });
+        const chains = await Promise.all(
+            Object.keys(merge({}, rules)).map(path => {
+                if (rules[path] instanceof When) {
+                    return Promise.resolve(
+                        rules[path].rule(data, this.config.context)
+                    ).then(rule => {
+                        return rule instanceof Chain
+                            ? rule.mount(data, path)
+                            : null;
+                    });
+                }
 
-        const results = await Promise.all(chains.map(chain => chain.valid()));
+                return rules[path].mount(data, path);
+            })
+        );
+
+        const results = await Promise.all(
+            chains
+                .filter(chain => {
+                    return chain instanceof Chain;
+                })
+                .map(chain => {
+                    return chain.valid();
+                })
+        );
         const errors = results
             .filter(result => result.result === false)
             .map(result => result.detail);
@@ -109,6 +130,10 @@ class Acr {
         });
 
         return data;
+    }
+
+    when(path, expect, rule) {
+        return new When().when(path, expect, rule);
     }
 }
 
