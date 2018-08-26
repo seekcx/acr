@@ -19,8 +19,8 @@
 -   Typescript 支持
 -   参数命名
 -   数据转换
--   默认值 #2
--   逻辑验证 #3
+-   默认值 [#2](https://github.com/seekcx/acr/issues/2)
+-   逻辑验证 [#3](https://github.com/seekcx/acr/issues/3)
 
 ## 安装
 
