@@ -1,7 +1,5 @@
 # Acr
 
-![Screenshot](https://raw.githubusercontent.com/seekcx/acr/master/screenshot.png)
-
 [![NPM version](https://img.shields.io/npm/v/acr.svg?style=flat-square)](https://npmjs.org/package/acr)
 [![build status](https://img.shields.io/travis/seekcx/acr.svg?style=flat-square)](https://travis-ci.org/seekcx/acr)
 [![code coverage](https://img.shields.io/codecov/c/github/seekcx/acr.svg?style=flat-square)](https://codecov.io/gh/seekcx/acr)
@@ -21,6 +19,8 @@
 -   Typescript 支持
 -   参数命名
 -   数据转换
+-   默认值 #2
+-   逻辑验证 #3
 
 ## 安装
 
@@ -34,6 +34,53 @@ yarn
 
 ```sh
 yarn add acr
+```
+
+## 使用
+
+```js
+// 验证多个
+const { name, age, gender } = await acr.validate({
+    name: 'abel',
+    age: 18,
+    gender: ''
+}, {
+    name: acr.string().equal('abel'),
+    age: acr.number().min(16).max(20),
+    gender: acr.string().in(['male', 'female']).default('male')
+});
+
+console.log(name, age, gender); // abel 18 male
+
+// 条件验证
+await acr.validate({
+    name: 'abel',
+    age: 18,
+    gender: 'male'
+}, {
+    // 当 name 等于 abel 时，验证 age 是否在 16-20 之间
+    age: acr.when('name', 'abel', () => {
+        return acr.number().min(16).max(20);
+    }),
+    // 当闭包返回 true 时，验证 gender 必须等于 male
+    gender: acr.when(data => {
+        return data['name'] === 'abel';
+    }, () => {
+        return acr.string().equal('male');
+    })
+});
+
+
+// 验证失败处理
+try {
+    await acr.validate({
+        name: 'abel',
+    }, {
+        name: acr.string().equal('zbel'),
+    });
+} catch (error) {
+    console.log(error); // ValidationError
+}
 ```
 
 ## 配置
@@ -51,44 +98,6 @@ const acr = new Acr({
         }
     }
 });
-```
-
-[详细配置](https://seek.gitbook.io/acr/config)
-
-## 使用
-
-```js
-// 定义规则
-acr.type('test')
-    .define('equal', value => value === 'abel')
-    .define('max', (value, { params }) => {
-        return value <= params[0];
-    });
-
-// 单个验证
-await acr.test().equal().validate('abel');
-
-// 验证多个
-await acr.validate({
-    name: 'abel',
-    age: 18
-}, {
-    name: acr.test().equal(),
-    age: acr.test().max(20)
-});
-
-// 验证失败处理
-try {
-    await acr.validate({
-        name: 'abdl',
-        age: 21
-    }, {
-        name: acr.test().equal(),
-        age: acr.test().max(20)
-    });
-} catch (error) {
-    console.log(error); // ValidationError
-}
 ```
 
 ## 文档
