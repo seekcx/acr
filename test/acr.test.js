@@ -193,7 +193,11 @@ test('when', async t => {
             age: acr
                 .when(
                     data => {
-                        return data.name === 'tom';
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve(data.name === 'tom');
+                            }, 10);
+                        });
                     },
                     () => {
                         return acr.number().min(10);
