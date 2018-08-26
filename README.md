@@ -12,11 +12,11 @@
 
 ## 特性
 
--   全异步验证支持
+-   全异步验证
 -   高度可扩展
 -   链式操作（定义和使用）
--   国际化支持
--   Typescript 支持
+-   国际化
+-   Typescript
 -   参数命名
 -   数据转换
 -   默认值 [#2](https://github.com/seekcx/acr/issues/2)
