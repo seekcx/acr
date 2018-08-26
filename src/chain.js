@@ -135,7 +135,7 @@ class Chain {
             throw new ValidationError(result.detail);
         }
 
-        return this;
+        return this.value();
     }
 
     async value() {
