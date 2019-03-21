@@ -70,7 +70,7 @@ test('async validate error', async t => {
         }
     );
 
-    const error = await t.throws(promise);
+    const error = await t.throwsAsync(promise);
     t.is(error.name, 'ValidationError');
 });
 
@@ -92,12 +92,12 @@ test('should be failed when return a string', async t => {
         return value;
     });
 
-    const promise = acr
-        .test()
-        .bar()
-        .validate('foobar');
-
-    const error = await t.throws(promise);
+    const error = await t.throwsAsync(async () => {
+        await acr
+            .test()
+            .bar()
+            .validate('foobar');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -113,28 +113,29 @@ test('required', async t => {
 
     t.is(foo, 'bar');
 
-    let promise = acr.validate(
-        {
-            bar: ''
-        },
-        {
-            foo: acr.string().required(),
-            bar: acr.string().required()
-        }
-    );
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr.validate(
+            {
+                bar: ''
+            },
+            {
+                foo: acr.string().required(),
+                bar: acr.string().required()
+            }
+        );
+    });
 
     t.is(error.errors[0].message, 'foo is a required field');
     t.is(error.errors[1].message, 'bar is a required field');
 
-    promise = acr.validate(
-        {},
-        {
-            foo: acr.string().required('foo is required')
-        }
-    );
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr.validate(
+            {},
+            {
+                foo: acr.string().required('foo is required')
+            }
+        );
+    });
     t.is(error.errors[0].message, 'foo is required');
 
     // pass
@@ -219,7 +220,7 @@ test('when', async t => {
         }
     );
 
-    const error = await t.throws(promise);
+    const error = await t.throwsAsync(promise);
 
     t.is(error.errors[0].message, 'age must be less than or equal to 20');
     t.is(error.errors[1].message, 'bio must be at least 10 characters');

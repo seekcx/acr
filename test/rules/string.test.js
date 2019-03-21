@@ -13,20 +13,20 @@ test('equal', async t => {
         .validate('foo');
     t.is(value, 'foo');
 
-    let promise = acr
-        .string({ name: 'test' })
-        .equal('foo')
-        .validate('bar');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string({ name: 'test' })
+            .equal('foo')
+            .validate('bar');
+    });
     t.is(error.errors.message, 'test must be equal to foo');
 
-    promise = acr
-        .string()
-        .equal('foo', 'foobar')
-        .validate('bar');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .equal('foo', 'foobar')
+            .validate('bar');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -37,20 +37,20 @@ test('max', async t => {
         .validate('foo');
     t.is(value, 'foo');
 
-    let promise = acr
-        .string('test')
-        .max(5)
-        .validate('foobar');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .max(5)
+            .validate('foobar');
+    });
     t.is(error.errors.message, 'test must be at most 5 characters');
 
-    promise = acr
-        .string()
-        .max(5, 'foobar')
-        .validate('foobar');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .max(5, 'foobar')
+            .validate('foobar');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -61,20 +61,20 @@ test('min', async t => {
         .validate('foobar');
     t.is(value, 'foobar');
 
-    let promise = acr
-        .string('test')
-        .min(5)
-        .validate('foo');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .min(5)
+            .validate('foo');
+    });
     t.is(error.errors.message, 'test must be at least 5 characters');
 
-    promise = acr
-        .string()
-        .min(5, 'foobar')
-        .validate('foo');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .min(5, 'foobar')
+            .validate('foo');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -85,20 +85,20 @@ test('length', async t => {
         .validate('fooba');
     t.is(value, 'fooba');
 
-    let promise = acr
-        .string('test')
-        .length(5)
-        .validate('foo');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .length(5)
+            .validate('foo');
+    });
     t.is(error.errors.message, 'test must be at exactly 5 characters');
 
-    promise = acr
-        .string()
-        .length(5, 'foobar')
-        .validate('foobar');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .length(5, 'foobar')
+            .validate('foobar');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -109,20 +109,20 @@ test('email', async t => {
         .validate('abel@seek.cx');
     t.is(value, 'abel@seek.cx');
 
-    let promise = acr
-        .string('test')
-        .email()
-        .validate('foobar');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .email()
+            .validate('foobar');
+    });
     t.is(error.errors.message, 'test must be a valid email');
 
-    promise = acr
-        .string()
-        .email('foobar')
-        .validate('foobar');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .email('foobar')
+            .validate('foobar');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -133,20 +133,20 @@ test('regex', async t => {
         .validate('abel');
     t.is(value, 'abel');
 
-    let promise = acr
-        .string('test')
-        .regex(/foobar/)
-        .validate('abel');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .regex(/foobar/)
+            .validate('abel');
+    });
     t.is(error.errors.message, 'test must match the following: "/foobar/"');
 
-    promise = acr
-        .string()
-        .regex(/foobar/, 'foobar')
-        .validate('abel');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .regex(/foobar/, 'foobar')
+            .validate('abel');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -157,20 +157,20 @@ test('in', async t => {
         .validate('foo');
     t.is(value, 'foo');
 
-    let promise = acr
-        .string('test')
-        .in(['foo', 'bar'])
-        .validate('bax');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .in(['foo', 'bar'])
+            .validate('bax');
+    });
     t.is(error.errors.message, 'test must be in [ foo, bar ]');
 
-    promise = acr
-        .string()
-        .in(['foo', 'bar'], 'foobar')
-        .validate('bax');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .in(['foo', 'bar'], 'foobar')
+            .validate('bax');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -181,20 +181,20 @@ test('objectId', async t => {
         .validate('5b2b5a1bcc6f21584075edc9');
     t.is(value, '5b2b5a1bcc6f21584075edc9');
 
-    let promise = acr
-        .string('test')
-        .objectId()
-        .validate('foobar');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .objectId()
+            .validate('foobar');
+    });
     t.is(error.errors.message, 'test must be a MongoDB ObjectID');
 
-    promise = acr
-        .string()
-        .objectId('foobar')
-        .validate('bax');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .objectId('foobar')
+            .validate('bax');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -205,28 +205,28 @@ test('base64', async t => {
         .validate('MTIzNA==');
     t.is(value, 'MTIzNA==');
 
-    let promise = acr
-        .string('test')
-        .base64()
-        .validate('MTIzNA');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .base64()
+            .validate('MTIzNA');
+    });
     t.is(error.errors.message, 'test must be a base64 string');
 
-    promise = acr
-        .string()
-        .base64('foobar')
-        .validate('MTIzN==A');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .base64('foobar')
+            .validate('MTIzN==A');
+    });
     t.is(error.errors.message, 'foobar');
 
-    promise = acr
-        .string('test')
-        .base64()
-        .validate('MTIzN==A');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .base64()
+            .validate('MTIzN==A');
+    });
     t.is(error.errors.message, 'test must be a base64 string');
 });
 
@@ -237,20 +237,20 @@ test('url', async t => {
         .validate('https://seek.cx');
     t.is(value, 'https://seek.cx');
 
-    let promise = acr
-        .string('test')
-        .url()
-        .validate('bax');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .url()
+            .validate('bax');
+    });
     t.is(error.errors.message, 'test must be a url');
 
-    promise = acr
-        .string()
-        .url('foobar')
-        .validate('bax');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .url('foobar')
+            .validate('bax');
+    });
     t.is(error.errors.message, 'foobar');
 });
 
@@ -261,19 +261,19 @@ test('uuid', async t => {
         .validate('b9a98908-436b-4481-9814-a0dd03ff1698');
     t.is(value, 'b9a98908-436b-4481-9814-a0dd03ff1698');
 
-    let promise = acr
-        .string('test')
-        .uuid()
-        .validate('bax');
-
-    let error = await t.throws(promise);
+    let error = await t.throwsAsync(async () => {
+        await acr
+            .string('test')
+            .uuid()
+            .validate('bax');
+    });
     t.is(error.errors.message, 'test must be a uuid');
 
-    promise = acr
-        .string()
-        .uuid('all', 'foobar')
-        .validate('bax');
-
-    error = await t.throws(promise);
+    error = await t.throwsAsync(async () => {
+        await acr
+            .string()
+            .uuid('all', 'foobar')
+            .validate('bax');
+    });
     t.is(error.errors.message, 'foobar');
 });

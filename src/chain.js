@@ -1,6 +1,5 @@
 'use strict';
 
-/* eslint-disable no-await-in-loop */
 const { isNil, get, set, isFunction } = require('lodash');
 const Result = require('./result');
 const Validator = require('./validator');
