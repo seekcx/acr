@@ -169,6 +169,19 @@ test('transform', async t => {
     t.is(foo, 'bax');
 });
 
+test('as', async t => {
+    const { bar } = await acr.validate(
+        {
+            foo: 'bar'
+        },
+        {
+            foo: acr.string().as('bar')
+        }
+    );
+
+    t.is(bar, 'bar');
+});
+
 test('default', async t => {
     const { foo, bar } = await acr.validate(
         {},

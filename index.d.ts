@@ -70,7 +70,8 @@ declare namespace Acr {
 
     class Chain {
         validate(value: any): Promise<any>;
-        transform(fn: (value: any) => Promise<any> | any): Promise<any>;
+        as(name: string): this
+        transform(fn: (value: any) => Promise<any> | any): this;
         required(message?: string): this;
         default(value: any): this;
         default(value: (data: any, context: any) => any): this;

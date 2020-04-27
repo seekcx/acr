@@ -124,12 +124,14 @@ class Acr {
             throw new ValidationError(errors);
         }
 
-        const pures = await Promise.all(chains.map(chain => chain.value()));
-        pures.forEach((pure, key) => {
-            data[chains[key].path] = pure;
-        });
+        const pures = {};
+        (await Promise.all(chains.map(chain => chain.value()))).forEach(
+            (pure, key) => {
+                pures[chains[key].field()] = pure;
+            }
+        );
 
-        return data;
+        return pures;
     }
 
     when(path, expect, rule) {

@@ -11,7 +11,7 @@
         "seekcx <abel@seek.cx> (https://abel.seek.cx)"
     ],
     "dependencies": {
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.15"
     },
     "ava": {
         "failFast": true,

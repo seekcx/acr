@@ -150,6 +150,18 @@ class Chain {
         return isNil(fn) ? value : fn(value);
     }
 
+    field() {
+        const name = get(this.params, 'as');
+
+        return name || this.path;
+    }
+
+    as(name) {
+        set(this.params, 'as', name);
+
+        return this;
+    }
+
     transform(fn) {
         set(this.params, 'transform', fn);
 
