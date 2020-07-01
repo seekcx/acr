@@ -1,4 +1,5 @@
 const test = require('ava');
+const { isEmpty } = require('lodash');
 const Acr = require('../src');
 const Type = require('../src/type');
 const Chain = require('../src/chain');
@@ -180,6 +181,17 @@ test('as', async t => {
     );
 
     t.is(bar, 'bar');
+});
+
+test('optional', async t => {
+    const data = await acr.validate(
+        {},
+        {
+            foo: acr.string().optional()
+        }
+    );
+
+    t.is(isEmpty(data), true);
 });
 
 test('default', async t => {

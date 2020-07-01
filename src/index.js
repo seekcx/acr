@@ -1,10 +1,11 @@
 'use strict';
 
 const assert = require('assert');
-const { get, merge, indexOf, has } = require('lodash');
+const { get, merge, indexOf, has, remove } = require('lodash');
 const Type = require('./type');
 const Chain = require('./chain');
 const When = require('./when');
+const { ACR_OPTIONAL_VALUE } = require('./constant');
 const ValidationError = require('./validation-error');
 
 const loadRule = acr => {
@@ -125,11 +126,18 @@ class Acr {
         }
 
         const pures = {};
-        (await Promise.all(chains.map(chain => chain.value()))).forEach(
-            (pure, key) => {
+        (await Promise.all(chains.map(chain => chain.value())))
+            .filter((pure, key) => {
+                const isOptional = pure === ACR_OPTIONAL_VALUE;
+                if (isOptional) {
+                    remove(chains, (_, index) => key === index);
+                }
+
+                return !isOptional;
+            })
+            .forEach((pure, key) => {
                 pures[chains[key].field()] = pure;
-            }
-        );
+            });
 
         return pures;
     }

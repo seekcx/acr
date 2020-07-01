@@ -1,6 +1,7 @@
 'use strict';
 
 const { isNil, get, set, isFunction } = require('lodash');
+const { ACR_OPTIONAL_VALUE } = require('./constant');
 const Result = require('./result');
 const Validator = require('./validator');
 const ValidationError = require('./validation-error');
@@ -144,8 +145,12 @@ class Chain {
                 : this.defaultValue;
         }
 
-        const fn = get(this.params, 'transform');
         const value = get(this.data, this.path);
+        if (value === undefined && this.isOptional()) {
+            return ACR_OPTIONAL_VALUE;
+        }
+
+        const fn = get(this.params, 'transform');
 
         return isNil(fn) ? value : fn(value);
     }
@@ -158,6 +163,16 @@ class Chain {
 
     as(name) {
         set(this.params, 'as', name);
+
+        return this;
+    }
+
+    isOptional() {
+        return get(this.params, 'optional', false);
+    }
+
+    optional(is = true) {
+        set(this.params, 'optional', is);
 
         return this;
     }
