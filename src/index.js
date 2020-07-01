@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const { get, merge, indexOf, has, remove } = require('lodash');
+const { get, merge, indexOf, has } = require('lodash');
 const Type = require('./type');
 const Chain = require('./chain');
 const When = require('./when');
@@ -126,18 +126,14 @@ class Acr {
         }
 
         const pures = {};
-        (await Promise.all(chains.map(chain => chain.value())))
-            .filter((pure, key) => {
-                const isOptional = pure === ACR_OPTIONAL_VALUE;
-                if (isOptional) {
-                    remove(chains, (_, index) => key === index);
-                }
+        chains.forEach(async chain => {
+            const value = await chain.value();
+            const isOptional = value === ACR_OPTIONAL_VALUE;
 
-                return !isOptional;
-            })
-            .forEach((pure, key) => {
-                pures[chains[key].field()] = pure;
-            });
+            if (!isOptional) {
+                pures[chain.field()] = value;
+            }
+        });
 
         return pures;
     }
