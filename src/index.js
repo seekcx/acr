@@ -126,14 +126,15 @@ class Acr {
         }
 
         const pures = {};
-        chains.forEach(async chain => {
-            const value = await chain.value();
-            const isOptional = value === ACR_OPTIONAL_VALUE;
+        await Promise.all(
+            chains.map(async chain => {
+                const value = await chain.value();
 
-            if (!isOptional) {
-                pures[chain.field()] = value;
-            }
-        });
+                if (value !== ACR_OPTIONAL_VALUE) {
+                    pures[chain.field()] = value;
+                }
+            })
+        );
 
         return pures;
     }

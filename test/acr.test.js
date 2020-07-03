@@ -170,6 +170,23 @@ test('transform', async t => {
     t.is(foo, 'bax');
 });
 
+test('transform-async', async t => {
+    const { foo } = await acr.validate(
+        {
+            foo: 'bar'
+        },
+        {
+            foo: acr.string().transform(async () => {
+                return new Promise(resolve => {
+                    setTimeout(() => resolve('bax'), 100);
+                });
+            })
+        }
+    );
+
+    t.is(foo, 'bax');
+});
+
 test('as', async t => {
     const { bar } = await acr.validate(
         {
